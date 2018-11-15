@@ -1,13 +1,13 @@
 package com.example.joel_.numbertrivia3;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView mQuoteTextView;
+    private TriviaObjectAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    final List<TriviaObject> mTriviaObjects = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
         mQuoteTextView = findViewById(R.id.quote_message);
 
-        final List<TriviaItem> mTriviaObjects = new ArrayList<>();
-
         //Assigning the layout manager.
-        final RecyclerView mGeoRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
 
-        mGeoRecyclerView.setLayoutManager(mLayoutManager);
-        TriviaItemAdapter mAdapter = new TriviaItemAdapter(this, mTriviaObjects);
-        mGeoRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new TriviaObjectAdapter(this, mTriviaObjects);
+        mRecyclerView.setAdapter(mAdapter);
 
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -50,16 +51,26 @@ public class MainActivity extends AppCompatActivity {
         requestData();
     }
 
-    public void setQuoteTextView(String message) {
+    public void setQuoteTextView(String message, int number) {
 
         mQuoteTextView.setText(message);
+        mTriviaObjects.add(new TriviaObject(message, number));
+        updateUI();
+    }
 
+    private void updateUI() {
+        if (mAdapter == null) {
+            mAdapter = new TriviaObjectAdapter(this , mTriviaObjects);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.swapList(mTriviaObjects);
+        }
     }
 
     private void requestData() {
         NumbersApiServices service = NumbersApiServices.retrofit.create(NumbersApiServices.class);
         Random random = new Random();
-        int number = random.nextInt(500);
+        final int number = random.nextInt(500);
 
         /**
          * Make an a-synchronous call by enqueing and definition of callbacks.
@@ -71,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TriviaItem> call, Response<TriviaItem> response) {
                 TriviaItem dayQuoteItem = response.body();
-                setQuoteTextView(dayQuoteItem.getText());
+                setQuoteTextView(dayQuoteItem.getText(), number);
             }
 
             @Override
