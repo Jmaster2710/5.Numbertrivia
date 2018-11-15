@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,18 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestData() {
         NumbersApiServices service = NumbersApiServices.retrofit.create(NumbersApiServices.class);
-        Calendar calendar = Calendar.getInstance();
-
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        Random random = new Random();
+        int number = random.nextInt(500);
 
         /**
-
          * Make an a-synchronous call by enqueing and definition of callbacks.
-
          */
 
-        Call<TriviaItem> call = service.getTodaysQuote(month, dayOfMonth);
+        Call<TriviaItem> call = service.getQuote(number);
         call.enqueue(new Callback<TriviaItem>() {
 
             @Override

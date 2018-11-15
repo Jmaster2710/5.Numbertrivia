@@ -17,9 +17,7 @@ public interface NumbersApiServices {
     Retrofit retrofit = new Retrofit.Builder()
 
             .baseUrl(BASE_URL)
-
             .addConverterFactory(GsonConverterFactory.create())
-
             .build();
 
     /**
@@ -32,17 +30,15 @@ public interface NumbersApiServices {
      * day of month. It will be put in a DayQuoteTime object by Retrofit.
      */
 
-    @GET("/{month}/{dayOfMonth}/date?json")
+    @GET("/{number}/trivia?json")
 
     /**
 
      * "DayQuoteTime" is the name of the helper class just defined, defining the datamodel, and given as argument.
-
-     * "getTodaysQuote" is the name of the symbol get method. It can be chosen at wish, as long as it is invoked
-
+     * "getQuote" is the name of the symbol get method. It can be chosen at wish, as long as it is invoked
      * with the same name.
 
      */
 
-    Call<TriviaItem> getTodaysQuote(@Path("month") int monthNumber, @Path("dayOfMonth") int dayOfMonth);
+    Call<TriviaItem> getQuote(@Path("number") int randomNumber);
 }
