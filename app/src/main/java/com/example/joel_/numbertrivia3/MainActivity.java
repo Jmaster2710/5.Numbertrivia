@@ -19,8 +19,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private TextView mQuoteTextView;
     private TriviaObjectAdapter mAdapter;
     private RecyclerView mRecyclerView;
     final List<TriviaObject> mTriviaObjects = new ArrayList<>();
@@ -29,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mQuoteTextView = findViewById(R.id.quote_message);
 
         //Assigning the layout manager.
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -51,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setQuoteTextView(String message, int number) {
-
-        mQuoteTextView.setText(message);
         mTriviaObjects.add(new TriviaObject(message, number));
         updateUI();
     }

@@ -29,8 +29,14 @@ public class TriviaObjectAdapter extends  RecyclerView.Adapter<TriviaObjectViewH
 
     @Override
     public TriviaObjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gridcell, parent, false);
+        if (listTriviaObject.size() % 2 == 0) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gridcellreverse, parent, false);
+        } else
+        {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gridcell, parent, false);
+        }
 
         return new TriviaObjectViewHolder(view);
     }
