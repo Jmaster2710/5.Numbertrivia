@@ -30,12 +30,13 @@ public class TriviaObjectAdapter extends  RecyclerView.Adapter<TriviaObjectViewH
     @Override
     public TriviaObjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        if (listTriviaObject.size() % 2 == 0) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gridcellreverse, parent, false);
+        if (viewType == 0) {
+            view = inflater.inflate(R.layout.gridcellreverse, parent, false);
         } else
         {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gridcell, parent, false);
+            view = inflater.inflate(R.layout.gridcell, parent, false);
         }
 
         return new TriviaObjectViewHolder(view);
@@ -56,6 +57,10 @@ public class TriviaObjectAdapter extends  RecyclerView.Adapter<TriviaObjectViewH
         holder.textTwo.setText(triviaObject.getmQuote());
        // holder.geoImage.setImageResource(triviaObject.getmGeoImageName());
 
+    }
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2 * 2;
     }
 
     @Override
