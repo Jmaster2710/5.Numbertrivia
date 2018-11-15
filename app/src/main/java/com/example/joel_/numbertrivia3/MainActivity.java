@@ -2,9 +2,13 @@ package com.example.joel_.numbertrivia3;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -22,6 +26,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mQuoteTextView = findViewById(R.id.quote_message);
+
+        final List<TriviaItem> mTriviaObjects = new ArrayList<>();
+
+        //Assigning the layout manager.
+        final RecyclerView mGeoRecyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+
+        mGeoRecyclerView.setLayoutManager(mLayoutManager);
+        TriviaItemAdapter mAdapter = new TriviaItemAdapter(this, mTriviaObjects);
+        mGeoRecyclerView.setAdapter(mAdapter);
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {

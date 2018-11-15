@@ -9,9 +9,6 @@ public class TriviaItem {
     @SerializedName("text")
     @Expose
     private String text;
-    @SerializedName("year")
-    @Expose
-    private Integer year;
     @SerializedName("number")
     @Expose
     private Integer number;
@@ -28,14 +25,6 @@ public class TriviaItem {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
     }
 
     public Integer getNumber() {
